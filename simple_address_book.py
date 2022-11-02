@@ -14,7 +14,7 @@ class School:
         self.enrollment = total_enrollment
         self.rating = rating:
 
-class ElementarySchool:
+class ElementarySchool(School):
     """ This is a class representing an elementary school in our database"""
     
     def __init__(self, name, address, total_enrollment, rating, grades):
