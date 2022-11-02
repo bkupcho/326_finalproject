@@ -21,3 +21,10 @@ class ElementarySchool:
         super().__init__(name, address, total_enrollment, rating)
         self.grades = grades
         
+class Contact:
+    """A class displaying a users' contact information."""
+    def __init__(self, name, phone_num, birthday):
+        self.name = name
+        self.phone_num = phone_num
+        self.birthday = birthday
+        
