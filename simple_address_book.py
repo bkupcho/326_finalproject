@@ -1,8 +1,9 @@
 class Filters:
     """ A filtering system for an collection of people and their information """
-    def __init__(self, name, data):
-        self.data = data
+    def __init__(self, name, address, phone_num):
         self.name = name
+        self.address = address
+        self.phone_num = phone_num
      
 class School:
     """ This is a class representing a school in our database """
