@@ -51,5 +51,27 @@ class Person:
     
     Returns:
 	    An f-string showing a person's basic information.
+	    
     """
-        # extracts information about a person from a csv file; prints it as an f-string.
+	# extracts information about a person from a csv file; prints it as an f-string.
+  
+    def compare(self, person2):
+    """ Compares information about person 1 to person 2 using set operations and conditional statements
+
+    Args:
+        Person2 (str): an instance of a person
+    Returns:
+	A list of the commonalities between two people
+    """
+	# sees similarities between person 1 person two from the data in the csv file
+
+    def sort_by_county(sel, county_name):
+    """ Uses pandas filtering to display the people that live in a given county
+    Args:
+	county_name (str): the name of the county to filter by
+    Returns:
+	A dataframe consisting of the people in a given county
+    """
+	# creates a sorted dataframe that only shows people who live in a given county
+
+     
