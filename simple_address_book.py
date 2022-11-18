@@ -65,7 +65,7 @@ class Person:
     """
 	# sees similarities between person 1 person two from the data in the csv file
 
-    def sort_by_county(sel, county_name):
+    def sort_by_county(self, county_name):
     """ Uses pandas filtering to display the people that live in a given county
     Args:
 	county_name (str): the name of the county to filter by
