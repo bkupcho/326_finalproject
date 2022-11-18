@@ -28,3 +28,28 @@ class Contact:
         self.phone_num = phone_num
         self.birthday = birthday
         
+class Person:
+    """Class representing a person and their information.
+
+    Attributes:
+        name (str): person's first and last name
+        number (int): individual's 10-digit phone number
+        address (str): individual's address expressed as a regex
+        county (str, optional): county where the person lives
+    """
+    def __init__(self, name, number, address, county=None):
+        # dictionary of attributes listed above
+
+    def person_info():
+    """Displays basic information about an individual.
+
+    Args:
+	name (str): person's first and last name
+    number (int): individual's 10-digit phone number
+	address (str): individual's address expressed as a regex
+	county (str, optional): county where the person lives
+    
+    Returns:
+	    An f-string showing a person's basic information.
+    """
+        # extracts information about a person from a csv file; prints it as an f-string.
