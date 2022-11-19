@@ -44,7 +44,7 @@ class Person:
     """
 	# creates a sorted dataframe that only shows people who live in a given county
 	
-	def sort_by_name(self, last_name):
+    def sort_by_name(self, last_name):
 	""" Uses pandas to filter and display the people that have the same last name
     Args:
 	last_name (str): the last name of the person
@@ -63,24 +63,89 @@ class Person:
 	
 class ResourceDatabase:
 ''' Class representing the resources within a county
-Attributes: 
-	database (Set) '''
+
+    Attributes: 
+	database (dictionary -> list of 'Resource' objects) -> represents a
+		dictionary whose keys are town names, and each keys value is
+		a list of 'Resource' objects for that town. These resources can
+		either be schools, hospitals, police departments, fire departments,
+		or etc. (i.e., public services)
+'''
 
 	def __init__(self, filepath):
-	''' For each 'line’ in file being read in
-	expression = r “ … “
-			New_resource = Resource
-			Here, I’m going to create a new ‘Resource’ object for each line, then 
-	Read in the file with data about local nearby resources, these include:
-	Schools
-	Health Centers / Hospitals ''' 
+	'''
+		Here, I'm going to read in the file with data about local nearby resources, these include:
+		schools, hospitals, police departments, fire departments, or etc. (i.e., public services).
+		I'm going to match each line read in with a regex, and capture groups. I'm going to use those
+		capture groups to represent a 'Resource' object for each line. Based on the town of the resource
+		object, I'm going to append each 'Resource' object to it's corresponding list value in the 
+		'database' dictionary attribute, using the 'Resource' objects name as the key in the dictionary. 
+	''' 
+	    with open ( … ) as f:
+		For each 'line’ in file being read in
+			expression = r “ … “
+			m = re.match(line, expression)
+			x = group(town)
+			y = group(2)
+			...
+			New_resource = Resource(
+			self.database[x].append(Resource(..., ..., ...))
+
+				
+	def resources_by_town(eelf, String: town_name):
+	""" outputs a list of resources based on a specified town
+		Args:
+			town_name (string) -> specified town to get list of resources for
+		Returns (list of 'Resource' objects) -> returns resources a town has
+	"""
+		return self.database[town_name]
+
+class Resource:
+	''' This class represents a public service in our database. This class has many sub classes,
+	    based on the type of pubic service '''
 	
-	with open ( … ) as f:
+	def __str__(self):
+	''' This function will use f-strings to specify what the magic method str should print out for each 'Resource' object''' 
+	    return f" {...} is a Resource"
+	
+class School(Resource):
+   	""" This is a class representing a school in our database, and it has subclasses based on
+	the type of school (elementary, middle, high)
+	
+	Attributes:
+		name (string) -> name of the school
+		address (string) -> school address
+		enrollment (int) -> total number of students
+		rating (float) -> total rating """
+		
+   	def __init__(self, name, address, total_enrollment, rating):
+       		self.name = name
+       		self.address = address
+       		self.enrollment = total_enrollment
+       		self.rating = rating
+				
+	def __str__(self):
+	''' This function will use f-strings to specify what the magic method str should print out for each 'School' object''' 
+	    return f" {...} is a School in {...} "
+
+class ElementarySchool(School):
+  	 """ This is a class representing an elementary school in our database
+	 	Uses the super method to call its parents 'init' method
+	
+	Attributes:
+		name (string) -> name of the school
+		address (string) -> school address
+		enrollment (int) -> total number of students
+		rating (float) -> total rating
+		grades (list of ints) -> list of school grades for the school (like 3rd, 4th grade, etc.) """
+  
+   	def __init__(self, name, address, total_enrollment, rating, grades):
+       		super().__init__(name, address, total_enrollment, rating)
+       		self.grades = grades
 
 	def __str__(self):
-
-
-	resources_by_town(String: town_name):
+	''' This function will use f-strings to specify what the magic method str should print out for each 'ElementarySchool' object''' 
+	    return f" {...} is an Elementary School in {...}"
 		
 
 		
