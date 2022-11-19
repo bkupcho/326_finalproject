@@ -88,7 +88,6 @@ class ResourceDatabase:
 			x = group(town)
 			y = group(2)
 			...
-			New_resource = Resource(
 			self.database[x].append(Resource(..., ..., ...))
 
 				
