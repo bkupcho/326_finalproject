@@ -44,6 +44,23 @@ class Person:
     """
 	# creates a sorted dataframe that only shows people who live in a given county
 	
+	def sort_by_name(self, last_name):
+	""" Uses pandas to filter and display the people that have the same last name
+    Args:
+	last_name (str): the last name of the person
+    Returns:
+	A dataframe of the people that are related to one another
+    """
+	
+	def differences(self, person2):
+	""" Compares and displays the differences between person 1 and person 2 using sequence unpacking
+    Args:
+	person2 (str): an instance of a person
+    Returns:
+	A list of differences between the two people
+    """
+ 
+	
 class ResourceDatabase:
 ''' Class representing the resources within a county
 Attributes: 
@@ -64,3 +81,8 @@ Attributes:
 
 
 	resources_by_town(String: town_name):
+		
+
+		
+		
+
