@@ -1,3 +1,7 @@
+from argparse import ArgumentParser
+import re
+import sys
+
 class Person:
     """Class representing a person and their information.
 
@@ -147,6 +151,7 @@ class ElementarySchool(School):
 	    return f" {...} is an Elementary School in {...}"
 		
 
-		
+if __name__ == "__main__":
+    args = parse_args(sys.argv[1:])
 		
 
