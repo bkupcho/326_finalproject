@@ -1,6 +1,7 @@
 from argparse import ArgumentParser
 import re
 import sys
+import pandas as pd
 
 class Person:
     """Class representing a person and their information.
