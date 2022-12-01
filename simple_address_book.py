@@ -11,8 +11,11 @@ class Person:
         address (str): individual's address expressed as a regex
         county (str, optional): county where the person lives
     """
-    def __init__(self, name, number, address, county=None):
-        # dictionary of attributes listed above
+    def __init__(self, name, number=None, address, city):
+        self.name = name
+	self.number = number
+	self.address = address
+	self.city = city
 
     def person_info():
     """Displays basic information about an individual.
