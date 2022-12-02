@@ -9,6 +9,8 @@ class Person:
 	args:
 		f1 (str): a path to the first file
 		f2 (str): a path to the second file
+	returns:
+		a dataframe of all the school levels
 	'''
         df1 = pd.read_csv(f1)
         df2 = pd.read_csv(f2)
