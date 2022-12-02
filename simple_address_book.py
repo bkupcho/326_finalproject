@@ -4,6 +4,32 @@ import sys
 import pandas as pd
 
 class Person:
+    def concatenate(f1,f2):
+	'''concatenates the seprate csv files into one dataframe.
+	args:
+		f1 (str): a path to the first file
+		f2 (str): a path to the second file
+	'''
+        df1 = pd.read_csv(f1)
+        df2 = pd.read_csv(f2)
+        allnames = pd.concat([df1, df2])
+        return allnames
+    def fname_sort(letter):
+	'''Creates a filtering system based off the first letter of somebody's name using a lambda expression.
+	args:
+		letter (str): a capital letter that represents the first letter of someones name that the user wants to filter by.
+	returns:
+		a list of names begins with the given letter
+	'''
+        fname = allnames["Firstname"].to_list()
+        letter_names = [x for x in fname if letter in x[0]]
+        return letter_names
+
+
+
+
+
+class Person:
     """Class representing a person and their information.
 
     Attributes:
