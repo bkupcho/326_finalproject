@@ -3,8 +3,7 @@ import re
 import sys
 import pandas as pd
 
-class Person:
-    def concatenate(f1,f2):
+def concatenate(f1,f2):
 	'''concatenates the seprate csv files into one dataframe.
 	args:
 		f1 (str): a path to the first file
@@ -18,7 +17,7 @@ class Person:
 	df3 = pd.read_csv(f3)
         allnames = pd.concat([df1, df2, df3])
         return allnames
-    def fletter_sort(colname, letter):
+def fletter_sort(colname, letter):
 	'''Creates a filtering system based off the first letter of the words in a column using a list comprehension and f strings.
 	args:
 		colname (str): the name of a column in the allnames dataframe
