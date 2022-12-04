@@ -10,7 +10,7 @@ class Person:
 		f1 (str): a path to the first file
 		f2 (str): a path to the second file
 	returns:
-		a dataframe of all the school levels
+		a dataframe of all the class sections.
 	'''
         df1 = pd.read_csv(f1)
         df2 = pd.read_csv(f2)
@@ -18,10 +18,10 @@ class Person:
         allnames = pd.concat([df1, df2, df3])
         return allnames
     def fletter_sort(colname, letter):
-	'''Creates a filtering system based off the first letter of the words in a colum using a list comprehension and f strings.
+	'''Creates a filtering system based off the first letter of the words in a column using a list comprehension and f strings.
 	args:
 		colname (str): the name of a column in the allnames dataframe
-		letter (str): a capital letter that represents the first letter of someones name that the user wants to filter by.
+		letter (str): a capital letter that represents the first letter of the items in a column that the user wants to filter by.
 	returns:
 		the frquency of the results and a list of names begins with the given letter.
 	'''
