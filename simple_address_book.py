@@ -2,6 +2,8 @@ from argparse import ArgumentParser
 import re
 import sys
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 def concatenate(f1,f2,f3):
 	"""concatenates the seprate csv files into one dataframe.
@@ -19,18 +21,22 @@ def concatenate(f1,f2,f3):
 	return allnames
     
 def fletter_sort(colname, letter):
-	"""Creates a filtering system based off the first letter of the words in a column using a list comprehension and f strings.
+	"""Creates a filtering system based off the first letter of the words 
+ 			in a column using a list comprehension and f strings.
 		
   		args:
 			colname (str): the name of a column in the allnames dataframe
-			letter (str): a capital letter that represents the first letter of the items in a column that the user wants to filter by.
+			letter (str): a capital letter that represents the first letter of 
+   				the items in a column that the user wants to filter by.
 		
   		returns:
-			the frquency of the results and a list of names begins with the given letter.
+			the frquency of the results and a list of names begins with the 
+   				given letter.
 	"""
 	wordlist = allnames[colname].to_list()
 	fletter = [x for x in fletter if letter in x[0]]
-	return f"frequency of {letter} in {colname} :{len(fletter)}; results:{fletter}"
+	return f"frequency of {letter} in {colname} :{len(fletter)}; \
+     results:{fletter}"
 
 class Student:
     """Class representing a student and their information.
@@ -55,24 +61,28 @@ class Student:
         self.professor = professor
         self.home_state = home_state
         self.hr_week_studying = hr_week_studying
-
-	# extracts information about a person from a csv file; prints it as an f-string.
-    def person_info():
-        """ Displays basic information about an individual.
-		
-  			Args:
-				name (str): person's first and last name
-    			number (int): individual's 10-digit phone number
-				year (str): individual's address expressed as a regex
-				county (str, optional): county where the person lives
     
-    		Returns:
-	    		An f-string showing a person's basic information.
-		"""
-        return 0
-    # sees similarities between person 1 person two from the data in the csv file
+    def person_info():
+        """Displays basic information about an individual.
+
+    	Args:
+			name (str): person's first and last name
+    		number (int): individual's 10-digit phone number
+			address (str): individual's address expressed as a regex
+			county (str, optional): county where the person lives
+    
+    	Returns:
+	    	An f-string showing a person's basic information. 
+    	"""	
+     
+        df = pd.read_csv('class1.csv', index_col = "last_name")
+        return df.loc['Tiffa']
+    	
+    # sees similarities between person 1 person two from the data in the csv 
+    # file
     def compare(self, person2):
-        """ Compares information about person 1 to person 2 using set operations and conditional statements
+        """ Compares information about person 1 to person 2 using set operations 
+        		and conditional statements
 
     		Args:
      			Person2 (str): an instance of a person
@@ -91,27 +101,35 @@ def sort_by_county(self, county_name):
       		Returns:
 				A dataframe consisting of the people in a given county
     """
-    return 0
+	# creates a sorted dataframe that only shows people who live in a given 
+ 	# county
+	
+def plot(self):
+	""" Uses seaborn implot to display the correlation between hr_week_studying 
+	    and course_grade based on each teacher
+	
+ 	    Args:
+			df (str): dataframe of all 3 csv files
     
-def sort_by_name(self, last_name):
-	""" Uses pandas to filter and display the people that have the same last name
-    		
-      		Args:
-				last_name (str): the last name of the person
-    
-    		Returns:
-				A dataframe of the people that are related to one another
+    	Returns:
+		A seaborn implot
     """
-	return 0
-
+	df = pd.concat(map(pd.read_csv, ['class1.csv', 'class2.csv','class3.csv']))
+	sns.lmplot( x = "hr_week_studying", y = "course_grade" , data = df, hue = 
+            "professor")
+	
+	
 def differences(self, person2):
-    """ Compares and displays the differences between person 1 and person 2 using sequence unpacking
-    	
-     	Args:
+    """ Compares and displays the differences between person 1 and person 2 
+    		using sequence unpacking
+ 		
+   		Args:
 			person2 (str): an instance of a person
-    	
-     	Returns:
+    
+    	Returns:
 			A list of differences between the two people
     """
     return 0
+	
+	
 
