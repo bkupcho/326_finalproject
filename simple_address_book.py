@@ -16,16 +16,17 @@ class Person:
         df2 = pd.read_csv(f2)
         allnames = pd.concat([df1, df2])
         return allnames
-    def fname_sort(letter):
-	'''Creates a filtering system based off the first letter of somebody's name using a lambda expression.
+    def fletter_sort(colname, letter):
+	'''Creates a filtering system based off the first letter of the words in a colum using a list comprehension and f strings.
 	args:
+		colname (str): the name of a column in the allnames dataframe
 		letter (str): a capital letter that represents the first letter of someones name that the user wants to filter by.
 	returns:
-		a list of names begins with the given letter
+		the frquency of the results and a list of names begins with the given letter.
 	'''
-        fname = allnames["Firstname"].to_list()
-        letter_names = [x for x in fname if letter in x[0]]
-        return letter_names
+        wordlist = allnames[colname].to_list()
+        fletter = [x for x in fletter if letter in x[0]]
+        return f"frequency of {letter} in {colname} :{len(fletter)}; results:{fletter}"
 
 
 
