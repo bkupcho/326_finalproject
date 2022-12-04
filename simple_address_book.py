@@ -9,6 +9,7 @@ class Person:
 	args:
 		f1 (str): a path to the first file
 		f2 (str): a path to the second file
+		f3 (str): a path to the third file
 	returns:
 		a dataframe of all the class sections.
 	'''
