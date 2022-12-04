@@ -14,7 +14,8 @@ class Person:
 	'''
         df1 = pd.read_csv(f1)
         df2 = pd.read_csv(f2)
-        allnames = pd.concat([df1, df2])
+	df3 = pd.read_csv(f3)
+        allnames = pd.concat([df1, df2, df3])
         return allnames
     def fletter_sort(colname, letter):
 	'''Creates a filtering system based off the first letter of the words in a colum using a list comprehension and f strings.
