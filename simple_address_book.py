@@ -2,8 +2,10 @@ from argparse import ArgumentParser
 import re
 import sys
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-def concatenate(f1,f2):
+def concatenate(f1,f2,f3):
 	'''concatenates the seprate csv files into one dataframe.
 	args:
 		f1 (str): a path to the first file
@@ -37,16 +39,22 @@ class Person:
     """Class representing a person and their information.
 
     Attributes:
-        name (str): person's first and last name
-        number (int): individual's 10-digit phone number
-        address (str): individual's address expressed as a regex
-        county (str, optional): county where the person lives
+        fname (str): person's first name
+	lname (str): person's last name
+        year (str): person's grade level
+        grade (float): person's GPA
+        professor (str, optional): professor of an individual
+	state (str, optional): state where person is from
+	hours (int, optional): hours spent studying
     """
-    def __init__(self, name, number=None, address, city):
-        self.name = name
-	self.number = number
-	self.address = address
-	self.city = city
+    def __init__(self, fname, lname, year, grade, professor, state, hours):
+        self.fname = first_name
+	self.lname = last_name
+	self.year = year
+	self.grade = course_grade
+	self.professor = professor
+	self.state = state
+	self.hours = hours
 
     def person_info():
     """Displays basic information about an individual.
@@ -82,13 +90,17 @@ class Person:
     """
 	# creates a sorted dataframe that only shows people who live in a given county
 	
-    def sort_by_name(self, last_name):
-	""" Uses pandas to filter and display the people that have the same last name
+    def differences(self):
+	""" Uses seaborn implot to display the correlation between hr_week_studying 
+	    and course_grade based on each teacher
     Args:
-	last_name (str): the last name of the person
+	df (str): dataframe of all 3 csv files
     Returns:
-	A dataframe of the people that are related to one another
+	A seaborn implot
     """
+	df = pd.concat(map(pd.read_csv, ['class1.csv', 'class2.csv','class3.csv']))
+	sns.lmplot( x = "hr_week_studying", y = "course_grade" , data = df, hue = "professor")
+	
 	
 	def differences(self, person2):
 	""" Compares and displays the differences between person 1 and person 2 using sequence unpacking
