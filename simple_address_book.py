@@ -69,6 +69,10 @@ class Person:
 	    An f-string showing a person's basic information.
 	    
     """
+
+	df = pd.read_csv('class1.csv', index_col = "last_name")
+	df.loc['Tiffa']
+	
 	# extracts information about a person from a csv file; prints it as an f-string.
   
     def compare(self, person2):
@@ -90,7 +94,7 @@ class Person:
     """
 	# creates a sorted dataframe that only shows people who live in a given county
 	
-    def differences(self):
+    def plot(self):
 	""" Uses seaborn implot to display the correlation between hr_week_studying 
 	    and course_grade based on each teacher
     Args:
