@@ -66,10 +66,10 @@ class Student:
         """Displays basic information about an individual.
 
     	Args:
-			name (str): person's first and last name
+		name (str): person's first and last name
     		number (int): individual's 10-digit phone number
-			address (str): individual's address expressed as a regex
-			county (str, optional): county where the person lives
+		address (str): individual's address expressed as a regex
+		county (str, optional): county where the person lives
     
     	Returns:
 	    	An f-string showing a person's basic information. 
