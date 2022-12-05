@@ -18,7 +18,7 @@ def concatenate(f1,f2,f3):
 	df2 = pd.read_csv(f2)
 	df3 = pd.read_csv(f3)
 	allnames = pd.concat([df1, df2, df3])
-	return allnames
+	return allnames.drop('Unnamed: 7', axis = 1)
     
 def fletter_sort(allnames, colname, letter):
 	"""Creates a filtering system based off the first letter of the words 
@@ -34,7 +34,7 @@ def fletter_sort(allnames, colname, letter):
    				given letter.
 	"""
 	wordlist = allnames[colname].to_list()
-	fletter = [x for x in fletter if letter in x[0]]
+	fletter = [x for x in wordlist if letter in x[0]]
 	return f"frequency of {letter} in {colname} :{len(fletter)}; \
      results:{fletter}"
 
