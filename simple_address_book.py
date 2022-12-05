@@ -5,6 +5,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+# Brittany
 def concatenate(f1,f2,f3):
 	"""concatenates the seprate csv files into one dataframe.
 		args:
@@ -19,7 +20,8 @@ def concatenate(f1,f2,f3):
 	df3 = pd.read_csv(f3)
 	allnames = pd.concat([df1, df2, df3])
 	return allnames
-    
+
+# Brittany
 def fletter_sort(allnames, colname, letter):
 	"""Creates a filtering system based off the first letter of the words 
  			in a column using a list comprehension and f strings.
