@@ -35,7 +35,7 @@ def fletter_sort(allnames, colname, letter):
                    given letter.
     """
     wordlist = allnames[colname].to_list()
-    fletter = [x for x in fletter if letter in x[0]]
+    fletter = [x for x in wordlist if letter in x[0]]
     return f"frequency of {letter} in {colname} :{len(fletter)}; \
      results:{fletter}"
 
@@ -77,7 +77,7 @@ class Student:
         df = pd.read_csv('class1.csv', index_col = "last_name")
         return df.loc['Tiffa']
         
-    # sees similarities between person 1 person two from the data in the csv 
+    # sees similarities between person 1 person two from the data in the csv
     # file
     def compare(self, person2):
         """ Compares information about person 1 to person 2 using set operations 
@@ -141,21 +141,36 @@ class Teacher:
 class DataBase:
     
     def __init__(self, c1, c2, c3, t1):
-        newfile = concatenate(c1,c2,c3).to_csv
+        df = concatenate(c1,c2,c3).reset_index()
         self.course_data = {}
         self.teacher_data = []
         
-        with open(t1, "r", encoding="utf-8") as f:
-                 for line in f: matched_obj = re.search(r"(\w+),(\w+),(\w+),(\w+),(\w+),(\w+),(\w+)", line)
-                 key = matched_obj.group(1) + matched_obj.group(2)
-                 self.course_data[key] = Student(matched_obj.group(1),
-                 matched_obj.group(2),matched_obj.group(3),
-                 matched_obj.group(4),matched_obj.group(5),
-                 matched_obj.group(6),matched_obj.group(7)) 
+        for i in range(len(df)): 
+                key = df.loc[i, "first_name"] + " " + df.loc[i, "last_name"]
+                print(len(df))
+                print(key)
+                print(i)
+                self.course_data[key] = Student(df.loc[i, "first_name"],
+                df.loc[i, "first_name"],df.loc[i, "year"],
+                df.loc[i, "course_grade"],df.loc[i, "professor"],
+                df.loc[i, "home_state"],df.loc[i, "hr_week_studying"])
         
-        #with open(t1, "r", encoding="utf-8") as f:
-        #    for line in f: 
-        #       matched_obj = re.search(r"(\w+),(\w+),(\w+),(\w+),(\w+)")
+        with open(t1, "r", encoding="utf-8") as f:
+            for line in f: 
+               matched_obj = re.search(r"(\w+),(\w+),(\w+),(\w+),(\w+)", line)
+               self.teacher_data.append(Teacher(matched_obj.group(1),
+                matched_obj.group(2), matched_obj.group(3), matched_obj.group(4),
+                matched_obj.group(5)))
+            del self.teacher_data[0]
+            
+    def __str__(self):
+        for teacher in self.teacher_data:
+            print(f"{teacher.name} has {int(teacher.office_hr_capacity) - len(teacher.queue)} spots open")
+            
+        for student in self.course_data:
+            print(f"{student} has a gpa of {self.course_data[student].course_grade}")
+            
+        return ""
                  
                  
     
