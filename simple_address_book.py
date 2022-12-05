@@ -35,7 +35,7 @@ def fletter_sort(allnames, colname, letter):
    				given letter.
 	"""
 	wordlist = allnames[colname].to_list()
-	fletter = [x for x in wordlist if letter in x[0]]
+	fletter = [x for x in fletter if letter in x[0]]
 	return f"frequency of {letter} in {colname} :{len(fletter)}; \
      results:{fletter}"
 
@@ -67,10 +67,10 @@ class Student:
         """Displays basic information about an individual.
 
     	Args:
-		name (str): person's first and last name
+			name (str): person's first and last name
     		number (int): individual's 10-digit phone number
-		address (str): individual's address expressed as a regex
-		county (str, optional): county where the person lives
+			address (str): individual's address expressed as a regex
+			county (str, optional): county where the person lives
     
     	Returns:
 	    	An f-string showing a person's basic information. 
