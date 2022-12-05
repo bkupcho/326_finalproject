@@ -5,39 +5,54 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Brittany
-def concatenate(f1,f2,f3):
-    """concatenates the seprate csv files into one dataframe.
-        args:
-            f1 (str): a path to the first file
-            f2 (str): a path to the second file
-            f3 (str): a path to the third file
-        returns:
-            a dataframe of all the class sections.
-    """
-    df1 = pd.read_csv(f1)
-    df2 = pd.read_csv(f2)
-    df3 = pd.read_csv(f3)
-    allnames = pd.concat([df1, df2, df3])
-    return allnames.drop('Unnamed: 7', axis = 1)
+class DataBase:
     
-def fletter_sort(allnames, colname, letter):
-    """Creates a filtering system based off the first letter of the words 
-             in a column using a list comprehension and f strings.
+    def __init__(self, c1, c2, c3, t1):
+        df = concatenate(c1,c2,c3).reset_index()
+        self.course_data = {}
+        self.teacher_data = []
         
-          args:
-            colname (str): the name of a column in the allnames dataframe
-            letter (str): a capital letter that represents the first letter of 
-                   the items in a column that the user wants to filter by.
+        for i in range(len(df)): 
+                key = df.loc[i, "first_name"] + " " + df.loc[i, "last_name"]
+                print(len(df))
+                print(key)
+                print(i)
+                self.course_data[key] = Student(df.loc[i, "first_name"],
+                df.loc[i, "first_name"],df.loc[i, "year"],
+                df.loc[i, "course_grade"],df.loc[i, "professor"],
+                df.loc[i, "home_state"],df.loc[i, "hr_week_studying"])
         
-          returns:
-            the frquency of the results and a list of names begins with the 
-                   given letter.
-    """
-    wordlist = allnames[colname].to_list()
-    fletter = [x for x in wordlist if letter in x[0]]
-    return f"frequency of {letter} in {colname} :{len(fletter)}; \
-     results:{fletter}"
+        with open(t1, "r", encoding="utf-8") as f:
+            for line in f: 
+               matched_obj = re.search(r"(\w+),(\w+),(\w+),(\w+),(\w+)", line)
+               self.teacher_data.append(Teacher(matched_obj.group(1),
+                matched_obj.group(2), matched_obj.group(3), matched_obj.group(4),
+                matched_obj.group(5)))
+            del self.teacher_data[0]
+            
+    def __str__(self):
+        for teacher in self.teacher_data:
+            print(f"{teacher.name} has {int(teacher.office_hr_capacity) - len(teacher.queue)} spots open")
+            
+        for student in self.course_data:
+            print(f"{student} has a gpa of {self.course_data[student].course_grade}")
+            
+        return ""
+    
+class Teacher:
+    
+    def __init__(self, fname, lname, position, years_of_experience, office_hr_capacity):
+        self.name = fname + lname
+        self.position = position
+        self.years_of_experience = years_of_experience
+        self.office_hr_capacity = office_hr_capacity
+        self.queue = []
+        
+    def how_many_students_waiting(filepath):
+        
+        with open(filepath, "r", encoding="utf-8") as f:
+             for line in f: 
+                 matched_obj = re.search(r"(\w+),(\w+),(\w+),(\w+),(\w+)")
 
 class Student:
     """Class representing a student and their information.
@@ -90,6 +105,40 @@ class Student:
             A list of the commonalities between two people
         """
         return 0
+    
+# Brittany
+def concatenate(f1,f2,f3):
+    """concatenates the seprate csv files into one dataframe.
+        args:
+            f1 (str): a path to the first file
+            f2 (str): a path to the second file
+            f3 (str): a path to the third file
+        returns:
+            a dataframe of all the class sections.
+    """
+    df1 = pd.read_csv(f1)
+    df2 = pd.read_csv(f2)
+    df3 = pd.read_csv(f3)
+    allnames = pd.concat([df1, df2, df3])
+    return allnames.drop('Unnamed: 7', axis = 1)
+    
+def fletter_sort(allnames, colname, letter):
+    """Creates a filtering system based off the first letter of the words 
+             in a column using a list comprehension and f strings.
+        
+          args:
+            colname (str): the name of a column in the allnames dataframe
+            letter (str): a capital letter that represents the first letter of 
+                   the items in a column that the user wants to filter by.
+        
+          returns:
+            the frquency of the results and a list of names begins with the 
+                   given letter.
+    """
+    wordlist = allnames[colname].to_list()
+    fletter = [x for x in wordlist if letter in x[0]]
+    return f"frequency of {letter} in {colname} :{len(fletter)}; \
+     results:{fletter}"
         
 # creates a sorted dataframe that only shows people who live in a given county
 def sort_by_professor(self, professor):
@@ -122,56 +171,3 @@ def differences(self, person2):
             A list of differences between the two people
     """
     return 0
-
-class Teacher:
-    
-    def __init__(self, fname, lname, position, years_of_experience, office_hr_capacity):
-        self.name = fname + lname
-        self.position = position
-        self.years_of_experience = years_of_experience
-        self.office_hr_capacity = office_hr_capacity
-        self.queue = []
-        
-    def how_many_students_waiting(filepath):
-        
-        with open(filepath, "r", encoding="utf-8") as f:
-             for line in f: 
-                 matched_obj = re.search(r"(\w+),(\w+),(\w+),(\w+),(\w+)")
-
-class DataBase:
-    
-    def __init__(self, c1, c2, c3, t1):
-        df = concatenate(c1,c2,c3).reset_index()
-        self.course_data = {}
-        self.teacher_data = []
-        
-        for i in range(len(df)): 
-                key = df.loc[i, "first_name"] + " " + df.loc[i, "last_name"]
-                print(len(df))
-                print(key)
-                print(i)
-                self.course_data[key] = Student(df.loc[i, "first_name"],
-                df.loc[i, "first_name"],df.loc[i, "year"],
-                df.loc[i, "course_grade"],df.loc[i, "professor"],
-                df.loc[i, "home_state"],df.loc[i, "hr_week_studying"])
-        
-        with open(t1, "r", encoding="utf-8") as f:
-            for line in f: 
-               matched_obj = re.search(r"(\w+),(\w+),(\w+),(\w+),(\w+)", line)
-               self.teacher_data.append(Teacher(matched_obj.group(1),
-                matched_obj.group(2), matched_obj.group(3), matched_obj.group(4),
-                matched_obj.group(5)))
-            del self.teacher_data[0]
-            
-    def __str__(self):
-        for teacher in self.teacher_data:
-            print(f"{teacher.name} has {int(teacher.office_hr_capacity) - len(teacher.queue)} spots open")
-            
-        for student in self.course_data:
-            print(f"{student} has a gpa of {self.course_data[student].course_grade}")
-            
-        return ""
-                 
-                 
-    
-
