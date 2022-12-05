@@ -89,21 +89,19 @@ class Student:
      			Person2 (str): an instance of a person
     		
       		Returns:
-				A list of the commonalities between two people
+			A list of the commonalities between two people
     	"""
         return 0
     	
 # creates a sorted dataframe that only shows people who live in a given county
-def sort_by_county(self, county_name):
-    """ Uses pandas filtering to display the people that live in a given county
+def sort_by_professor(self, professor):
+    """ Uses set operations to compare students' professors.
     		Args:
-				county_name (str): the name of the county to filter by
+			professors (str): the name of the professor
     		
       		Returns:
-				A dataframe consisting of the people in a given county
+			list of names of students that fulfill the given set operation	
     """
-	# creates a sorted dataframe that only shows people who live in a given 
- 	# county
 	
 def plot(self):
 	""" Uses seaborn implot to display the correlation between hr_week_studying 
