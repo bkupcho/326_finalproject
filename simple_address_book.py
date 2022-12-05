@@ -19,9 +19,8 @@ def concatenate(f1,f2,f3):
 	df2 = pd.read_csv(f2)
 	df3 = pd.read_csv(f3)
 	allnames = pd.concat([df1, df2, df3])
-	return allnames
-
-# Brittany
+	return allnames.drop('Unnamed: 7', axis = 1)
+    
 def fletter_sort(allnames, colname, letter):
 	"""Creates a filtering system based off the first letter of the words 
  			in a column using a list comprehension and f strings.
@@ -36,7 +35,7 @@ def fletter_sort(allnames, colname, letter):
    				given letter.
 	"""
 	wordlist = allnames[colname].to_list()
-	fletter = [x for x in fletter if letter in x[0]]
+	fletter = [x for x in wordlist if letter in x[0]]
 	return f"frequency of {letter} in {colname} :{len(fletter)}; \
      results:{fletter}"
 
@@ -68,10 +67,10 @@ class Student:
         """Displays basic information about an individual.
 
     	Args:
-			name (str): person's first and last name
+		name (str): person's first and last name
     		number (int): individual's 10-digit phone number
-			address (str): individual's address expressed as a regex
-			county (str, optional): county where the person lives
+		address (str): individual's address expressed as a regex
+		county (str, optional): county where the person lives
     
     	Returns:
 	    	An f-string showing a person's basic information. 
@@ -132,6 +131,15 @@ def differences(self, person2):
 			A list of differences between the two people
     """
     return 0
-	
+
+class Teacher:
+    
+    def __init__(self, fname, lname, position, years_of_experience, office_hr_capacity):
+        self.name = fname + lname
+        self.position = position
+        self.years_of_experience = years_of_experience
+        self.office_hr_capacity
+        self.queue = []
+
 	
 
