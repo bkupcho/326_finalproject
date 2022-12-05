@@ -20,7 +20,7 @@ def concatenate(f1,f2,f3):
 	allnames = pd.concat([df1, df2, df3])
 	return allnames
     
-def fletter_sort(colname, letter):
+def fletter_sort(allnames, colname, letter):
 	"""Creates a filtering system based off the first letter of the words 
  			in a column using a list comprehension and f strings.
 		
@@ -42,10 +42,10 @@ class Student:
     """Class representing a student and their information.
 
     Attributes:
-        name (str): person's first and last name.
-        number (int): individual's 10-digit phone number.
-        year (str): individual's year at college.
-        course_grade (int): numeric grade average of the student.
+        name (str): student's first and last name.
+        number (int): student's 10-digit phone number.
+        year (str): student's year at college.
+        course_grade (int): numeric grade point average of the student.
         professor (str): student's course professor.
         home_state (str): student's home state.
         hr_week_studying (int): hours a week student spends for the particular
