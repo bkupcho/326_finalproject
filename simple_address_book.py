@@ -14,11 +14,8 @@ class DataBase:
         
         for i in range(len(df)): 
                 key = df.loc[i, "first_name"] + " " + df.loc[i, "last_name"]
-                print(len(df))
-                print(key)
-                print(i)
                 self.course_data[key] = Student(df.loc[i, "first_name"],
-                df.loc[i, "first_name"],df.loc[i, "year"],
+                df.loc[i, "last_name"],df.loc[i, "year"],
                 df.loc[i, "course_grade"],df.loc[i, "professor"],
                 df.loc[i, "home_state"],df.loc[i, "hr_week_studying"])
         
@@ -39,6 +36,15 @@ class DataBase:
             
         return ""
     
+    def filter_by_oh_capacity(self, index, original_list, new_list, n):
+        if index == len(original_list):
+            return new_list
+        else:
+            (self.filter_by_oh_capacity(index + 1, original_list, new_list, n)) \
+                if (original_list[index].office_hr_capacity < 5) else \
+                    (self.filter_by_oh_capacity(index + 1, original_list, 
+                              new_list.append(original_list[index]), n))
+    
 class Teacher:
     
     def __init__(self, fname, lname, position, years_of_experience, office_hr_capacity):
@@ -48,11 +54,15 @@ class Teacher:
         self.office_hr_capacity = office_hr_capacity
         self.queue = []
         
-    def how_many_students_waiting(filepath):
-        
+    def update_oh_queue(self, filepath, database):
         with open(filepath, "r", encoding="utf-8") as f:
              for line in f: 
-                 matched_obj = re.search(r"(\w+),(\w+),(\w+),(\w+),(\w+)")
+                 matched_obj = re.search(r"(\w+),(\w+)", line)
+                 name = matched_obj.group(1) + " " + matched_obj.group(2)
+                 
+                 if name in database.course_data.keys():
+                    self.queue.append(database.course_data[name])
+
 
 class Student:
     """Class representing a student and their information.
@@ -69,7 +79,7 @@ class Student:
     
     def __init__(self, fname, lname, year, course_grade, professor,
                 home_state, hr_week_studying):
-        self.name = fname + lname
+        self.name = fname + " " + lname
         self.year = year
         self.course_grade = course_grade
         self.professor = professor
