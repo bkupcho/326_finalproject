@@ -62,7 +62,14 @@ class Teacher:
                  
                  if name in database.course_data.keys():
                     self.queue.append(database.course_data[name])
-
+                
+    def __str__(self):
+        exp = self.years_of_experience
+        prof = self.name
+        
+        tenure = print(f'{prof} has taught for {exp} years and is tenured') \
+            if len(exp) > 4 else print(f'{prof} has taught for \
+                {exp} years and is not tenured yet.')           
 
 class Student:
     """Class representing a student and their information.
@@ -86,21 +93,21 @@ class Student:
         self.home_state = home_state
         self.hr_week_studying = hr_week_studying
     
-    def person_info():
+    def person_info(self, allnames, name, lname):
         """Displays basic information about an individual.
 
         Args:
-            name (str): person's first and last name
-            number (int): individual's 10-digit phone number
-            address (str): individual's address expressed as a regex
-            county (str, optional): county where the person lives
+            allname (str): dataframe of 3 csv files
+            name (str): individual's first and last name
+            lname (str): individual's last name
     
         Returns:
-            An f-string showing a person's basic information. 
+            An f-string and row showing a selected person's basic information. 
         """	
      
-        df = pd.read_csv('class1.csv', index_col = "last_name")
-        return df.loc['Tiffa']
+        df = allnames
+        print(f"This is {self.name}'s personal information:")
+        df.loc[df['last_name'] == lname]
         
     # sees similarities between person 1 person two from the data in the csv
     # file
@@ -116,6 +123,16 @@ class Student:
         """
         return 0
     
+    def __add__(self, other):
+        return (self.course_grade + other.course_grade) / 2
+    
+    def __str__(self):
+        gpa = self.course_grade
+        student = self.name
+        
+        location = print(f'{student} is on the Dean\'s list') if gpa >= 3 else \
+            print(f'{student} did not make the Dean\'s list')
+            
 # Brittany
 def concatenate(f1,f2,f3):
     """concatenates the seprate csv files into one dataframe.
@@ -153,22 +170,27 @@ def fletter_sort(allnames, colname, letter):
 # creates a sorted dataframe that only shows people who live in a given county
 def sort_by_professor(self, professor):
     """ Uses set operations to compare students' professors.
-            Args:
+    
+        Args:
             professors (str): the name of the professor
             
-              Returns:
+        Returns:
             list of names of students that fulfill the given set operation	
     """
     
-def plot(self):
+def plot(self, allnames):
     """ Uses seaborn implot to display the correlation between hr_week_studying 
         and course_grade based on each teacher
     
          Args:
-            df (str): dataframe of all 3 csv files"""
-    df = pd.concat(map(pd.read_csv, ['class1.csv', 'class2.csv','class3.csv']))
-    sns.lmplot( x = "hr_week_studying", y = "course_grade" , data = df, hue = 
-            "professor")
+            allnames (str): dataframe of all 3 csv files
+            
+         Returns:
+            a seaborn implot
+    """
+    
+    df = allnames
+    sns.lmplot( x = "hr_week_studying", y = "course_grade" , data = df, hue = "professor")
     
 def differences(self, person2):
     """ Compares and displays the differences between person 1 and person 2 
