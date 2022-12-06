@@ -53,6 +53,14 @@ class Teacher:
         with open(filepath, "r", encoding="utf-8") as f:
              for line in f: 
                  matched_obj = re.search(r"(\w+),(\w+),(\w+),(\w+),(\w+)")
+                
+    def __str__(self):
+        exp = self.years_of_experience
+        prof = self.name
+        
+        tenure = print(f'{prof} has taught for {exp} years and is tenured') \
+            if len(exp) > 4 else print(f'{prof} has taught for \
+                {exp} years and is not tenured yet.')           
 
 class Student:
     """Class representing a student and their information.
@@ -106,6 +114,16 @@ class Student:
         """
         return 0
     
+    def __add__(self, other):
+        return (self.course_grade + other.course_grade) / 2
+    
+    def __str__(self):
+        gpa = self.course_grade
+        student = self.name
+        
+        location = print(f'{student} is on the Dean\'s list') if gpa >= 3 else \
+            print(f'{student} did not make the Dean\'s list')
+            
 # Brittany
 def concatenate(f1,f2,f3):
     """concatenates the seprate csv files into one dataframe.
