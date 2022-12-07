@@ -128,6 +128,7 @@ def fletter_sort(allnames, colname, letter):
              in a column using a list comprehension and f strings.
         
           args:
+            allnames: a dataframe that compiles the 3 class sections
             colname (str): the name of a column in the allnames dataframe
             letter (str): a capital letter that represents the first letter of 
                    the items in a column that the user wants to filter by.
