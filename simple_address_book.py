@@ -189,7 +189,7 @@ def main(class1, class2, class3, teachers, oh_waitlist):
         
     x.filter_by_oh_capacity(0, x.teacher_data, [], 5)
     
-    print(str(t1))
+    #print(str(t1))
 
     person_info(df, "Suzette Jillane", "Jillane")
     plot(df)
