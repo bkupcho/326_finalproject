@@ -4,6 +4,7 @@ import sys
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import termplotlib as tpl
 
 class DataBase:
     
@@ -41,20 +42,21 @@ class DataBase:
             return new_list
         else:
             (self.filter_by_oh_capacity(index + 1, original_list, new_list, n)) \
-                if (original_list[index].office_hr_capacity < 5) else \
+                if (original_list[index].office_hr_capacity < n) else \
                     (self.filter_by_oh_capacity(index + 1, original_list, 
                               new_list.append(original_list[index]), n))
     
 class Teacher:
     
     def __init__(self, fname, lname, position, years_of_experience, office_hr_capacity):
-        self.name = fname + lname
+        self.name = fname + " " + lname
         self.position = position
         self.years_of_experience = years_of_experience
         self.office_hr_capacity = office_hr_capacity
         self.queue = []
         
     def update_oh_queue(self, filepath, database):
+                
         with open(filepath, "r", encoding="utf-8") as f:
              for line in f: 
                  matched_obj = re.search(r"(\w+),(\w+)", line)
@@ -67,10 +69,12 @@ class Teacher:
         exp = self.years_of_experience
         prof = self.name
         
-        tenure = print(f'{prof} has taught for {exp} years and is tenured') \
-            if len(exp) > 4 else print(f'{prof} has taught for \
+        print(f'{prof} has taught for {exp} years and is tenured') \
+            if exp > 4 else print(f'{prof} has taught for \
                 {exp} years and is not tenured yet.')           
 
+        return ""
+    
 class Student:
     """Class representing a student and their information.
 
@@ -93,46 +97,16 @@ class Student:
         self.home_state = home_state
         self.hr_week_studying = hr_week_studying
     
-    def person_info(self, allnames, name, lname):
-        """Displays basic information about an individual.
-
-        Args:
-            allname (str): dataframe of 3 csv files
-            name (str): individual's first and last name
-            lname (str): individual's last name
-    
-        Returns:
-            An f-string and row showing a selected person's basic information. 
-        """	
-     
-        df = allnames
-        print(f"This is {self.name}'s personal information:")
-        df.loc[df['last_name'] == lname]
-        
-    # sees similarities between person 1 person two from the data in the csv
-    # file
-    def compare(self, person2):
-        """ Compares information about person 1 to person 2 using set operations 
-                and conditional statements
-
-            Args:
-                 Person2 (str): an instance of a person
-            
-              Returns:
-            A list of the commonalities between two people
-        """
-        return 0
-    
     def __add__(self, other):
         return (self.course_grade + other.course_grade) / 2
     
     def __str__(self):
         gpa = self.course_grade
         student = self.name
+        print(f"{student} is on the Dean's list") if (gpa >= 3) else \
+            (print(f"{student} did not make the Dean's list"))
         
-        location = print(f'{student} is on the Dean\'s list') if gpa >= 3 else \
-            print(f'{student} did not make the Dean\'s list')
-            
+        return ""    
 # Brittany
 def concatenate(f1,f2,f3):
     """concatenates the seprate csv files into one dataframe.
@@ -164,21 +138,9 @@ def fletter_sort(allnames, colname, letter):
     """
     wordlist = allnames[colname].to_list()
     fletter = [x for x in wordlist if letter in x[0]]
-    return f"frequency of {letter} in {colname} :{len(fletter)}; \
-     results:{fletter}"
-        
-# creates a sorted dataframe that only shows people who live in a given county
-def sort_by_professor(self, professor):
-    """ Uses set operations to compare students' professors.
+    return f"frequency of {letter} in {colname} :{len(fletter)}; results:{fletter}"
     
-        Args:
-            professors (str): the name of the professor
-            
-        Returns:
-            list of names of students that fulfill the given set operation	
-    """
-    
-def plot(self, allnames):
+def plot(allnames):
     """ Uses seaborn implot to display the correlation between hr_week_studying 
         and course_grade based on each teacher
     
@@ -188,18 +150,60 @@ def plot(self, allnames):
          Returns:
             a seaborn implot
     """
-    
-    df = allnames
-    sns.lmplot( x = "hr_week_studying", y = "course_grade" , data = df, hue = "professor")
-    
-def differences(self, person2):
-    """ Compares and displays the differences between person 1 and person 2 
-            using sequence unpacking
-         
-           Args:
-            person2 (str): an instance of a person
+    sns.lmplot( x = "hr_week_studying", y = "course_grade" , data = allnames, hue = "professor")
+
+def person_info(allnames, name, lname):
+        """Displays basic information about an individual.
+
+        Args:
+            allname (str): dataframe of 3 csv files
+            name (str): individual's first and last name
+            lname (str): individual's last name
     
         Returns:
-            A list of differences between the two people
-    """
-    return 0
+            An f-string and row showing a selected person's basic information. 
+        """	
+     
+        print(f"This is {name}'s personal information:")
+        print(allnames.loc[allnames['last_name'] == lname])
+    
+def main(class1, class2, class3, teachers, oh_waitlist):
+    x = DataBase(class1, class2, class3, teachers)
+    df = concatenate(class1, class2, class3).reset_index()
+    print(df)
+    #print(fletter_sort(df,"first_name","S"))
+    
+    #s1 = Student("person","one", "Freshman", 3.7, "idk", "MD", 10)
+    #s2 = Student("person","two", "Freshman", 2.3, "idk", "MD", 10)
+    
+    #print(s1 + s2)
+    #print(str(s1))
+    #print(str(s2))
+    
+    #t1 = Teacher("teacher","one", "Professor", 10, 12)
+    #print(t1.queue)
+    #t1.update_oh_queue(oh_waitlist, x)
+    #for i in t1.queue:
+    #print(i.name)
+        
+    x.filter_by_oh_capacity(0, x.teacher_data, [], 5)
+    
+    print(str(t1))
+
+    person_info(df, "Suzette Jillane", "Jillane")
+    plot(df)
+    plt.show()
+    
+    
+def parse_args(arglist):
+    parser = ArgumentParser()
+    parser.add_argument("class1", help="file containing data for course 1")
+    parser.add_argument("class2", help="file containing data for course 2")
+    parser.add_argument("class3", help="file containing data for course 3")
+    parser.add_argument("teachers", help="file containing teacher data")
+    parser.add_argument("oh_waitlist", help="file containing students on oh waitlist")
+    return parser.parse_args(arglist)
+
+if __name__ == "__main__":
+    args = parse_args(sys.argv[1:])
+    main(args.class1, args.class2, args.class3, args.teachers, args.oh_waitlist)
