@@ -160,7 +160,7 @@ def person_info(allnames, name, lname):
         """Displays basic information about an individual.
 
         Args:
-            allname (str): dataframe of 3 csv files
+            allnames (str): dataframe of all csv files
             name (str): individual's first and last name
             lname (str): individual's last name
     
