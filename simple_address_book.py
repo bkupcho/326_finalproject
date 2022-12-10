@@ -66,6 +66,7 @@ class Teacher:
                     self.queue.append(database.course_data[name])
                 
     def __str__(self):
+        """Returns an f-string that correlates with the conditional expression stating whether or not a teacher is tenured."""
         exp = self.years_of_experience
         prof = self.name
         
@@ -98,9 +99,11 @@ class Student:
         self.hr_week_studying = hr_week_studying
     
     def __add__(self, other):
+        """Finds the average course grade of two students."""
         return (self.course_grade + other.course_grade) / 2
     
     def __str__(self):
+        """Returns an f-string that correlates with a conditional expression stating whether or not a student made the Dean's list."
         gpa = self.course_grade
         student = self.name
         print(f"{student} is on the Dean's list") if (gpa >= 3) else \
