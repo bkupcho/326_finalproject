@@ -7,6 +7,7 @@
 * **class3.csv** -> Contains information about a particular course, along with students in that course. Uses ExtendsClass's random data generator to obtain random names.
 * **teachers.csv** -> Contains information about all the teachers of a course (including TAs). Uses ExtendsClass's random data generator to obtain random names.
 * **oh_waitlist.csv** -> Lists students currently on the office hour waitlist (only includes their first and last name).
+* **INST326_FinalProject_Bibliography.pdf** -> Bibliography for this project. Only contains one source, which is the source we used to randomly generate the names for students/teachers in our CSV files.
 
 ## How to Run Program from the Command Line:
 
