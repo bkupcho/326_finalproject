@@ -163,9 +163,9 @@ def person_info(allnames, name, lname):
             allnames (str): dataframe of all csv files
             name (str): individual's first and last name
             lname (str): individual's last name
-    
-        Returns:
-            An f-string and row showing a selected person's basic information. 
+            
+        Side Effects:
+            prints f-string and row showing a selected person's basic information. 
         """	
      
         print(f"This is {name}'s personal information:")
