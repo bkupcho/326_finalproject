@@ -7,12 +7,30 @@ import seaborn as sns
 import termplotlib as tpl
 
 class DataBase:
+    """ This class contains information abouts the students, professors, and 
+            TAs for a particular course at the University of Maryland. None of
+            the information is real per se, however the data represents data
+            that you may see associated with a course in rea life. 
+            
+            Attributes:
+                course_data (Dictionary of 'Students'): The key of this
+                    dictionary is a student's first and last name as a String,
+                    like "firstname lastname". The value of each key is a 
+                    Student object associated with the student named in the key.
+                teacher_data (List of 'Teacher'): Represents a list of 'Teacher' 
+                    objects. The '__init__' method of this class reads in a 
+                    teacher csv, and for each line in the file a new teacher 
+                    object is created.
+                    
+                    Edit
+    
+    """
     
     def __init__(self, c1, c2, c3, t1):
         df = concatenate(c1,c2,c3).reset_index()
         self.course_data = {}
         self.teacher_data = []
-        
+    
         for i in range(len(df)): 
                 key = df.loc[i, "first_name"] + " " + df.loc[i, "last_name"]
                 self.course_data[key] = Student(df.loc[i, "first_name"],
