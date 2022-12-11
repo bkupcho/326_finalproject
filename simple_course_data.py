@@ -104,7 +104,7 @@ class Student:
     
     def __str__(self):
         """Returns an f-string that correlates with a conditional expression stating whether or not a student made the Dean's list."
-        gpa = self.course_grade
+        gpa = self.course_grade"""
         student = self.name
         print(f"{student} is on the Dean's list") if (gpa >= 3) else \
             (print(f"{student} did not make the Dean's list"))
