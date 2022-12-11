@@ -18,15 +18,25 @@ class DataBase:
                     like "firstname lastname". The value of each key is a 
                     Student object associated with the student named in the key.
                 teacher_data (List of 'Teacher'): Represents a list of 'Teacher' 
-                    objects. The '__init__' method of this class reads in a 
-                    teacher csv, and for each line in the file a new teacher 
-                    object is created.
-                    
-                    Edit
-    
+                    objects. 
     """
     
     def __init__(self, c1, c2, c3, t1):
+        """ This method initializes the 'DataBase' class.
+        
+        Args:
+            self ('DataBase'): The object calling the method.
+            c1 (str): represents csv to be read in for course 1.
+            c2 (str): represents csv to be read in for course 2.
+            c3 (str): represents csv to be read in for course 3.
+            t1 (str): represents csv to be read in for course 4.
+            
+        Side Effects:
+            Initializes the attributes 'course-data' and 'teacher_data'
+            by reading in csv's and created new 'Student'/'Teacher' objects
+            for each line.
+        """
+        
         df = concatenate(c1,c2,c3).reset_index()
         self.course_data = {}
         self.teacher_data = []
@@ -47,6 +57,20 @@ class DataBase:
             del self.teacher_data[0]
             
     def __str__(self):
+        """ This method prints an informal string representation of the 'Database'
+                object.
+                
+            Args:
+                self ('DataBase'): The object calling the method.
+                
+            Side Effects:
+                Prints information about the calling 'DataBase' object (and
+                the 'Students' and 'Teachers' within it) to stdout.
+            
+            Returns (str): Returns the empty string, as only data is being 
+                printed to stdout.
+        """
+        
         for teacher in self.teacher_data:
             print(f"{teacher.name} has {int(teacher.office_hr_capacity) - len(teacher.queue)} spots open")
             
@@ -55,25 +79,60 @@ class DataBase:
             
         return ""
     
-    def filter_by_oh_capacity(self, index, original_list, new_list, n):
-        if index == len(original_list):
-            return new_list
-        else:
-            (self.filter_by_oh_capacity(index + 1, original_list, new_list, n)) \
-                if (original_list[index].office_hr_capacity < n) else \
-                    (self.filter_by_oh_capacity(index + 1, original_list, 
-                              new_list.append(original_list[index]), n))
-    
 class Teacher:
+    """ This class reprsents a specific teacher of the course the overarching
+            'DataBase' represents. 
+            
+        Attributes:
+            name(str): represents a teachers first and last names.
+            position(str): denotes whether the teacher is a TA or Professor.
+            years_of_experience(int): how many years of experience the teacher
+                has
+            office_hr_capacity(int): how many office hours does the teacher have
+            queue(list of 'Students'): represents a list of students waiting in
+                the office hour queue.
+    """
     
     def __init__(self, fname, lname, position, years_of_experience, office_hr_capacity):
+        """ This method initializes the 'Teacher' class.
+        
+        Args:
+            self ('Teacher'): The object calling the method.
+            fname (str): represents the teachers first name.
+            lname (str): represents the teachers last name.
+            years_of_experience(int): how many years of experience the teacher
+                has
+            office_hr_capacity(int): how many office hours does the teacher have
+            queue(list of 'Students'): represents a list of students waiting in
+                the office hour queue.
+            
+        Side Effects:
+            Initializes the attributes of the class by reading the arguments 
+            passed in, or by giving them default values
+        """
+        
         self.name = fname + " " + lname
         self.position = position
-        self.years_of_experience = years_of_experience
+        self.years_of_experience =years_of_experience
         self.office_hr_capacity = office_hr_capacity
         self.queue = []
         
     def update_oh_queue(self, filepath, database):
+        """ This method updates a 'Teachers' office hour attribute 'queue', 
+                specifically by adding 'Student' objects to the 'queue' based
+                on a csv being read in. 
+                
+                Args:
+                    self ('Teacher'): The object calling the method.
+                    filepath (str): The csv being read in, which contains the
+                        first and last names of the students.
+                    database ('DataBase'): The 'DataBase' object the method uses
+                        to check whether the student on the list is a part of or
+                        not.
+        
+                Side Effects:
+                    Updates(appends) 'Student' objects to the office hour queue.
+        """
                 
         with open(filepath, "r", encoding="utf-8") as f:
              for line in f: 
@@ -89,7 +148,7 @@ class Teacher:
         prof = self.name
         
         print(f'{prof} has taught for {exp} years and is tenured') \
-            if exp > 4 else print(f'{prof} has taught for \
+            if int(exp) > 4 else print(f'{prof} has taught for \
                 {exp} years and is not tenured yet.')           
 
         return ""
@@ -109,6 +168,22 @@ class Student:
     
     def __init__(self, fname, lname, year, course_grade, professor,
                 home_state, hr_week_studying):
+        """ This method initializes the 'Teacher' class.
+        
+        Args:
+            fname (str): student's first name.
+            lname (str): student's last name.
+            year (str): student's year at college.
+            course_grade (int): numeric grade point average of the student.
+            professor (str): student's course professor.
+            home_state (str): student's home state.
+            hr_week_studying (int): hours a week student spends for the 
+            particular course.
+            
+        Side Effects:
+            Initializes the attributes of the class by reading the arguments 
+            passed in, or by giving them default values.
+        """
         self.name = fname + " " + lname
         self.year = year
         self.course_grade = course_grade
@@ -188,31 +263,83 @@ def person_info(allnames, name, lname):
      
         print(f"This is {name}'s personal information:")
         print(allnames.loc[allnames['last_name'] == lname])
-    
+
+def filter_by_oh_capacity(index, original_list, new_list, n):
+        """ This method filters teachers by their office hours capacity. The 
+        method does so in a recursive fashion. 
+        
+        Args:
+            index(int): When first called, this arguments has the value of 0.
+                In order to iterate through the 'original_list' of teachers, 
+                this 'index' will be incremented by 1 for each iteration. 
+            original_list(list of 'Teachers'): A list of teacher objects (like
+                DataBase.teacher_data) is passed in, as this is the list the 
+                method will recursively filter and extract data from.
+            new_list(list of 'Teachers'): When first passed in the method, the
+                list is empty. This list will serve as an accumulator. With
+                each recursive call, this list may have a 'Teacher' object 
+                appended to it or not, depending on whether the current
+                'Teacher' object in 'original_list' (being accessed by 'index')
+                meets a specified criteria.
+            n (int): This is the criteria mentioned above. This is the number 
+                the method makes decisions by. 
+                
+        Returns (list of 'Teachers'): This list is initially empty, and will
+            possibly be built upon based on the arguments being passed in. This
+            list represents all the teachers that have a GREATER number of
+            office hours then the number 'n' being passed in.
+        """
+        
+        if (isinstance(new_list, list)):
+            if index == len(original_list):
+                return new_list
+            else:
+                if (int(original_list[index].office_hr_capacity)< n):
+                    return filter_by_oh_capacity(index + 1, original_list, new_list, n)
+                else:
+                    new_list.append(original_list[index])
+                    return filter_by_oh_capacity(index + 1, original_list, new_list, n)
+                        
 def main(class1, class2, class3, teachers, oh_waitlist):
+    # DataBase Creation -> Derek
     x = DataBase(class1, class2, class3, teachers)
+    
+    # DataFrames / Using Pandas / List Comprehensions -> Brittany
+    print("Demonstration of Brittany's Methods:")
     df = concatenate(class1, class2, class3).reset_index()
     print(df)
-    #print(fletter_sort(df,"first_name","S"))
+    print(fletter_sort(df,"first_name","S"))
+    print('\n')
     
-    #s1 = Student("person","one", "Freshman", 3.7, "idk", "MD", 10)
-    #s2 = Student("person","two", "Freshman", 2.3, "idk", "MD", 10)
+    # Magic Methods / Conditional Expressions -> Elliott
+    print("Demonstration of Elliott's Methods:")
+    s1 = Student("person","one", "Freshman", 3.7, "idk", "MD", 10)
+    s2 = Student("person","two", "Freshman", 2.3, "idk", "MD", 10)
+    print(s1 + s2)
+    print('\n')
+    print(str(s1))
+    print(str(s2))
     
-    #print(s1 + s2)
-    #print(str(s1))
-    #print(str(s2))
-    
-    #t1 = Teacher("teacher","one", "Professor", 10, 12)
-    #print(t1.queue)
-    #t1.update_oh_queue(oh_waitlist, x)
-    #for i in t1.queue:
-    #print(i.name)
-        
-    x.filter_by_oh_capacity(0, x.teacher_data, [], 5)
-    
-    #print(str(t1))
+    # With statements / Regular Expressions -> Derek
+    print("Demonstration of Derek's Methods:\n")
+    t1 = Teacher("teacher","one", "Professor", 10, 12)
+    print("Queue is Empty:")
+    print(t1.queue)
+    print('\n')
+    print("Updated Queue:")
+    t1.update_oh_queue(oh_waitlist, x)
+    for i in t1.queue:
+        print(i.name)
+    print('\n')
+    print("Finding Teachers who have MORE than 5 office hours (INCLUSIVE).\n")
+    filter_t = filter_by_oh_capacity(0, x.teacher_data, [], 5)
+    for i in filter_t:
+        print(i.name + " " + i.office_hr_capacity)
 
-    person_info(df, "Suzette Jillane", "Jillane")
+    # F-Strings / Seaborn Plot -> Shreeya
+    print('\n')
+    print("Demonstration of Shreeya's Methods:\n")
+    print(person_info(df, "Suzette Jillane", "Jillane"))
     plot(df)
     plt.show()
     
