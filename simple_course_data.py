@@ -27,8 +27,7 @@ class DataBase:
                 matched_obj.group(2), matched_obj.group(3), matched_obj.group(4),
                 matched_obj.group(5)))
             del self.teacher_data[0]
-    
-    # Derek
+            
     def __str__(self):
         for teacher in self.teacher_data:
             print(f"{teacher.name} has {int(teacher.office_hr_capacity) - len(teacher.queue)} spots open")
@@ -37,7 +36,16 @@ class DataBase:
             print(f"{student} has a gpa of {self.course_data[student].course_grade}")
             
         return ""
-            
+    
+    def filter_by_oh_capacity(self, index, original_list, new_list, n):
+        if index == len(original_list):
+            return new_list
+        else:
+            (self.filter_by_oh_capacity(index + 1, original_list, new_list, n)) \
+                if (original_list[index].office_hr_capacity < n) else \
+                    (self.filter_by_oh_capacity(index + 1, original_list, 
+                              new_list.append(original_list[index]), n))
+    
 class Teacher:
     
     def __init__(self, fname, lname, position, years_of_experience, office_hr_capacity):
@@ -47,12 +55,6 @@ class Teacher:
         self.office_hr_capacity = office_hr_capacity
         self.queue = []
         
-    # Derek    
-    # Updates office hour queue attribute for Teacher
-    # Does so by reading in a file, checking to see if those 
-    # names exist as actual students in our database, if so, 
-    # we append the associated student object to the 
-    # queue list
     def update_oh_queue(self, filepath, database):
                 
         with open(filepath, "r", encoding="utf-8") as f:
@@ -62,9 +64,9 @@ class Teacher:
                  
                  if name in database.course_data.keys():
                     self.queue.append(database.course_data[name])
-          
-    # Elliott      
+                
     def __str__(self):
+        """Returns an f-string that correlates with the conditional expression stating whether or not a teacher is tenured."""
         exp = self.years_of_experience
         prof = self.name
         
@@ -96,19 +98,18 @@ class Student:
         self.home_state = home_state
         self.hr_week_studying = hr_week_studying
     
-    # Elliott
     def __add__(self, other):
+        """Finds the average course grade of two students."""
         return (self.course_grade + other.course_grade) / 2
     
-    # Elliott
     def __str__(self):
+        """Returns an f-string that correlates with a conditional expression stating whether or not a student made the Dean's list."
         gpa = self.course_grade
         student = self.name
         print(f"{student} is on the Dean's list") if (gpa >= 3) else \
             (print(f"{student} did not make the Dean's list"))
         
-        return ""   
-     
+        return ""    
 # Brittany
 def concatenate(f1,f2,f3):
     """concatenates the seprate csv files into one dataframe.
@@ -124,8 +125,7 @@ def concatenate(f1,f2,f3):
     df3 = pd.read_csv(f3)
     allnames = pd.concat([df1, df2, df3])
     return allnames.drop('Unnamed: 7', axis = 1)
-
-# Brittany
+    
 def fletter_sort(allnames, colname, letter):
     """Creates a filtering system based off the first letter of the words 
              in a column using a list comprehension and f strings.
@@ -144,7 +144,6 @@ def fletter_sort(allnames, colname, letter):
     fletter = [x for x in wordlist if letter in x[0]]
     return f"frequency of {letter} in {colname} :{len(fletter)}; results:{fletter}"
     
-# Shreeya
 def plot(allnames):
     """ Uses seaborn implot to display the correlation between hr_week_studying 
         and course_grade based on each teacher
@@ -157,12 +156,11 @@ def plot(allnames):
     """
     sns.lmplot( x = "hr_week_studying", y = "course_grade" , data = allnames, hue = "professor")
 
-# Shreeya
 def person_info(allnames, name, lname):
         """Displays basic information about an individual.
 
         Args:
-            allname (str): dataframe of 3 csv files
+            allnames (str): dataframe of all csv files
             name (str): individual's first and last name
             lname (str): individual's last name
     
@@ -172,58 +170,33 @@ def person_info(allnames, name, lname):
      
         print(f"This is {name}'s personal information:")
         print(allnames.loc[allnames['last_name'] == lname])
-        
-# Derek
-# This function filters teachers by the amount of office hours 
-# they hold, does so in a recursive fashion. 'n' is the upper 
-# bound. index starts at 0. original_list is list of teachers, 
-# new_list is initially empty, the list serves as an 
-# accumulator that will be returned.
-def filter_by_oh_capacity(index, original_list, new_list, n):
-    if index == len(original_list):
-        return new_list
-    else:
-        if (int(original_list[index].office_hr_capacity) < n):
-            if (isinstance(new_list, list)):
-                new_list.append(original_list[index])
-                return filter_by_oh_capacity(index + 1, original_list, 
-                                new_list, n)
-        else:
-            return filter_by_oh_capacity(index + 1, 
-                                    original_list, new_list, n)
     
 def main(class1, class2, class3, teachers, oh_waitlist):
-    # Brittany
     x = DataBase(class1, class2, class3, teachers)
     df = concatenate(class1, class2, class3).reset_index()
-    #print(df)
+    print(df)
     #print(fletter_sort(df,"first_name","S"))
     
-    # Elliott
-    s1 = Student("person","one", "Freshman", 3.7, "prof 2", "MD", 10)
-    s2 = Student("person","two", "Freshman", 2.3, "prof 1", "MD", 10)
+    #s1 = Student("person","one", "Freshman", 3.7, "idk", "MD", 10)
+    #s2 = Student("person","two", "Freshman", 2.3, "idk", "MD", 10)
     
     #print(s1 + s2)
     #print(str(s1))
     #print(str(s2))
     
-    t1 = Teacher("teacher","one", "Professor", 10, 12)
-    #print(str(t1))
-
-    # Shreeya
-    #person_info(df, "Suzette Jillane", "Jillane")
-    #plot(df)
-    #plt.show()
-    
-    # Derek
+    #t1 = Teacher("teacher","one", "Professor", 10, 12)
     #print(t1.queue)
     #t1.update_oh_queue(oh_waitlist, x)
     #for i in t1.queue:
-    #    print(i.name)
+    #print(i.name)
         
-    y = filter_by_oh_capacity(0, x.teacher_data, [], 5)
-    for i in y:
-        print(i.name + ", " + i.office_hr_capacity)
+    x.filter_by_oh_capacity(0, x.teacher_data, [], 5)
+    
+    #print(str(t1))
+
+    person_info(df, "Suzette Jillane", "Jillane")
+    plot(df)
+    plt.show()
     
     
 def parse_args(arglist):
