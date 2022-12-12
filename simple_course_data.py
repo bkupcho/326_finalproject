@@ -4,7 +4,6 @@ import sys
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-import termplotlib as tpl
 
 class DataBase:
     """ This class contains information abouts the students, professors, and 
